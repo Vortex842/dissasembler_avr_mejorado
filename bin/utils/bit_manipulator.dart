@@ -1,65 +1,85 @@
 class BitManipulator {
-  /// Extrae valores de una palabra (word) basándose en un patrón de bits.
-  /// - [pattern]: Una cadena que representa el patrón de bits, donde '0' y '1'
-  /// son bits fijos y otras letras representan variables.
-  /// - [word]: El entero del cual se extraerán los valores.
-  /// - Retorna un mapa donde las claves son las variables definidas en el patrón
-  /// y los valores son los enteros extraídos correspondientes.
+  /// Extrae los valores numéricos de las variables incrustadas en una palabra (word)
+  /// basándose en un patrón de bits.
   ///
-  /// Ejemplo: pattern = "1110 KKKK dddd KKKK"
+  /// - [pattern]: Cadena que define la estructura (ej: "1110 KKKK dddd KKKK").
+  ///   - '0' y '1': Bits fijos (se usan para validación en otros lugares, aquí se ignoran).
+  ///   - Letras (K, d, r...): Representan variables cuyos valores queremos extraer.
+  /// - [word]: El número entero del cual se extraerán los bits.
+  ///
+  /// Retorna un [Map] donde cada clave es el nombre de cada variable (ej: "K")
+  /// y el valor, correspondiente a cada uno, es el entero extraído y reconstruido como entero.
   static Map<String, int> extractValues(String pattern, int word) {
-    // Limpiar espacios en el patrón
-    pattern = pattern.replaceAll(' ', '');
+    // Eliminamos espacios para trabajar con índices reales de bits
+    final cleanPattern = pattern.replaceAll(' ', '');
 
-    // 1. Mapear dónde está cada letra (bitPos)
-    Map<String, List<int>> positions = _getPositions(pattern);
+    // 1. Identificar qué bits del 'word' pertenecen a cada variable
+    final positions = _mapVariablePositions(cleanPattern);
 
-    // 2. Reconstruir los valores
-    Map<String, int> bits = _extractBits(positions, word);
-
-    return bits;
+    // 2. Extraer esos bits y reconstruir los valores numéricos
+    return _reconstructValues(positions, word);
   }
 
-  static Map<String, List<int>> _getPositions(String pattern) {
-    // Tamaño del patrón
-    int n = pattern.length;
+  /// Analiza el patrón y determina las posiciones de bits (índices) para cada variable.
+  ///
+  /// Convierte la posición del carácter en el string (lectura humana izq->der)
+  /// a la posición del bit en el entero (peso matemático 2^n).
+  ///
+  /// - [pattern]: El patrón limpio sin espacios.
+  ///
+  /// Retorna un mapa: {"K": [11, 10, 9, 8, 3, 2, 1, 0], ...}
+  /// Nota: Las posiciones son índices de bits (0 = LSB y 15 = MSB para palabras de 16 bits).
+  static Map<String, List<int>> _mapVariablePositions(String pattern) {
+    final int n = pattern.length;
+    final Map<String, List<int>> positions = {};
 
-    Map<String, List<int>> positions = {};
     for (int i = 0; i < n; i++) {
-      // Obtener el carácter en la posición i
-      String bit = pattern[i];
+      final String char = pattern[i];
 
-      // Validar que el carácter no sea 0 o 1
-      if (bit != '0' && bit != '1') {
-        // Convertimos índice de string a posición de bit (MSB a LSB)
-        int bitPos = (n - 1) - i;
+      // Si es una variable (no es un bit fijo '0' o '1')
+      if (char != '0' && char != '1') {
+        // Fórmula mágica: Convertir índice de array (i) a peso de bit.
+        // Si length es 16: i=0 -> bit 15 (MSB), i=15 -> bit 0 (LSB).
+        final int bitPos = (n - 1) - i;
 
-        // Agregar la posición del bit a la lista correspondiente en el mapa
-        // Si la clave no existe, inicializamos con una lista vacía
-        positions.putIfAbsent(bit, () => []).add(bitPos);
+        positions.putIfAbsent(char, () => []).add(bitPos);
       }
     }
     return positions;
   }
 
-  static Map<String, int> _extractBits(
+  /// Toma las posiciones mapeadas y extrae los bits del [word] para formar
+  /// los nuevos valores.
+  ///
+  /// - [positions]: Mapa de variables y sus listas de posiiciones de los bits originales.
+  /// - [word]: La palabra original de donde sacar los datos.
+  static Map<String, int> _reconstructValues(
       Map<String, List<int>> positions, int word) {
-    Map<String, int> bits = {};
-    positions.forEach(
-      (variable, bitPositions) {
-        // Invertimos la lista para llenar desde el bit menos significativo
-        final orderedBits = bitPositions.reversed.toList();
+    final Map<String, int> result = {};
 
-        int value = 0;
-        for (int i = 0; i < orderedBits.length; i++) {
-          int sourceBit = orderedBits[i];
-          // Tomamos el bit de la posición original y lo movemos a la posición i
-          value |= ((word >> sourceBit) & 1) << i;
-        }
-        bits[variable] = value;
-      },
-    );
+    positions.forEach((variable, bitIndices) {
+      // Invertimos la lista 'bitIndices'.
+      // ¿Por qué? Porque '_mapVariablePositions' escanea de Izq a Der (MSB a LSB).
+      // Para reconstruir el número nuevo, queremos llenar primero su bit 0, luego el 1, etc.
+      // Al invertir, el último bit leído (que es el de menor peso) queda primero.
+      final orderedIndices = bitIndices.reversed.toList();
 
-    return bits;
+      int newValue = 0;
+
+      for (int i = 0; i < orderedIndices.length; i++) {
+        final int sourceBitPos = orderedIndices[i];
+
+        // Lógica de bits:
+        // 1. (word >> sourceBitPos): Mueve el bit deseado a la posición 0.
+        // 2. & 1: Aísla ese bit (elimina el resto).
+        // 3. << i: Mueve ese bit a su nueva posición en el 'newValue' (0, 1, 2...).
+        final int bit = (word >> sourceBitPos) & 1;
+        newValue |= (bit << i);
+      }
+
+      result[variable] = newValue;
+    });
+
+    return result;
   }
 }
