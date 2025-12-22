@@ -53,6 +53,9 @@ class BitManipulator {
   ///
   /// - [positions]: Mapa de variables y sus listas de posiiciones de los bits originales.
   /// - [word]: La palabra original de donde sacar los datos.
+  ///
+  /// Retorna un mapa con los valores reconstruidos para cada variable.
+  /// Ejemplo: {"K": 0b10101010, "d": 0b1100}
   static Map<String, int> _reconstructValues(
       Map<String, List<int>> positions, int word) {
     final Map<String, int> result = {};
