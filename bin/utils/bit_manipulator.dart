@@ -1,3 +1,25 @@
+/// [BitManipulator]
+///
+/// PROPÓSITO:
+/// Actúa como el "Cirujano" del sistema. Su responsabilidad es diseccionar
+/// una instrucción cruda (word) y extraer los valores de sus operandos
+/// basándose en una plantilla (pattern).
+///
+/// ¿POR QUÉ EXISTE ESTA CLASE?
+/// En la arquitectura AVR, para ahorrar espacio, los operandos (como registros
+/// o constantes) a menudo están fragmentados y dispersos en posiciones no
+/// contiguas dentro de los 16 bits de la instrucción.
+///
+/// Ejemplo: En la instrucción LDI ("1110 KKKK dddd KKKK"), el valor inmediato 'K'
+/// está partido en dos pedazos separados por el registro 'd'.
+///
+/// Esta clase resuelve ese problema: localiza esos fragmentos dispersos,
+/// los extrae y los une para formar números enteros limpios y utilizables.
+///
+/// FLUJO:
+/// Entrada:  Patrón ("1110 KKKK dddd KKKK") + Código Hex como "word" (0xE001)
+/// Proceso:  Recorta los bits de 'd' y los bits de 'K'.
+/// Salida:   Mapa de valores {"d": 0, "K": 1}.
 class BitManipulator {
   /// Extrae los valores numéricos de las variables incrustadas en una palabra (word)
   /// basándose en un patrón de bits.
@@ -60,28 +82,30 @@ class BitManipulator {
       Map<String, List<int>> positions, int word) {
     final Map<String, int> result = {};
 
-    positions.forEach((variable, bitIndices) {
-      // Invertimos la lista 'bitIndices'.
-      // ¿Por qué? Porque '_mapVariablePositions' escanea de Izq a Der (MSB a LSB).
-      // Para reconstruir el número nuevo, queremos llenar primero su bit 0, luego el 1, etc.
-      // Al invertir, el último bit leído (que es el de menor peso) queda primero.
-      final orderedIndices = bitIndices.reversed.toList();
+    positions.forEach(
+      (variable, bitIndices) {
+        // Invertimos la lista 'bitIndices'.
+        // ¿Por qué? Porque '_mapVariablePositions' escanea de Izq a Der (MSB a LSB).
+        // Para reconstruir el número nuevo, queremos llenar primero su bit 0, luego el 1, etc.
+        // Al invertir, el último bit leído (que es el de menor peso) queda primero.
+        final orderedIndices = bitIndices.reversed.toList();
 
-      int newValue = 0;
+        int newValue = 0;
 
-      for (int i = 0; i < orderedIndices.length; i++) {
-        final int sourceBitPos = orderedIndices[i];
+        for (int i = 0; i < orderedIndices.length; i++) {
+          final int sourceBitPos = orderedIndices[i];
 
-        // Lógica de bits:
-        // 1. (word >> sourceBitPos): Mueve el bit deseado a la posición 0.
-        // 2. & 1: Aísla ese bit (elimina el resto).
-        // 3. << i: Mueve ese bit a su nueva posición en el 'newValue' (0, 1, 2...).
-        final int bit = (word >> sourceBitPos) & 1;
-        newValue |= (bit << i);
-      }
+          // Lógica de bits:
+          // 1. (word >> sourceBitPos): Mueve el bit deseado a la posición 0.
+          // 2. & 1: Aísla ese bit (elimina el resto).
+          // 3. << i: Mueve ese bit a su nueva posición en el 'newValue' (0, 1, 2...).
+          final int bit = (word >> sourceBitPos) & 1;
+          newValue |= (bit << i);
+        }
 
-      result[variable] = newValue;
-    });
+        result[variable] = newValue;
+      },
+    );
 
     return result;
   }
