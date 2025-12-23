@@ -89,6 +89,9 @@ class HexParserService {
     // Ej: "0C94" son 4 chars.
     for (int i = 0; i < dataStr.length; i += 4) {
       // Aseguramos que queden suficientes caracteres para formar una palabra
+      // de 16 bits
+      // Ej: Si quedan 3 chars, no alcanza para formar 1 palabra completa.
+      // En ese caso, simplemente lo ignoramos (debería ser raro en un HEX válido).
       if (i + 4 <= dataStr.length) {
         String wordHex = dataStr.substring(i, i + 4);
 
