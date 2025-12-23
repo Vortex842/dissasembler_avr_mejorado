@@ -85,26 +85,16 @@ class HexParserService {
   List<int> _parseDataBytes(String dataStr) {
     List<int> bytes = [];
 
-    // Avanzamos de 4 en 4 caracteres (porque 4 chars = 1 palabra de 16 bits)
-    // Ej: "0C94" son 4 chars.
-    for (int i = 0; i < dataStr.length; i += 4) {
-      // Aseguramos que queden suficientes caracteres para formar una palabra
-      // de 16 bits
-      // Ej: Si quedan 3 chars, no alcanza para formar 1 palabra completa.
-      // En ese caso, simplemente lo ignoramos (debería ser raro en un HEX válido).
-      if (i + 4 <= dataStr.length) {
-        String wordHex = dataStr.substring(i, i + 4);
+    // Recorremos de 4 en 4 caracteres (2 bytes = 1 palabra de 16 bits)
+    // El bucle ni siquiera intentará entrar si no quedan 4 caracteres completos.
+    for (int i = 0; i + 4 <= dataStr.length; i += 4) {
+      String wordHex = dataStr.substring(i, i + 4);
 
-        // INVERSIÓN (Little Endian):
-        // El archivo trae "LowByte HighByte" (ej: 0C 94).
-        // Nosotros queremos el valor real 0x940C.
-        // Tomamos los últimos 2 chars (94) y los ponemos primero.
-        String invertedHex = wordHex.substring(2, 4) + wordHex.substring(0, 2);
-
-        // Agregar a la lista como entero
-        bytes.add(int.parse(invertedHex, radix: 16));
-      }
+      // Inversión Little Endian
+      String invertedHex = wordHex.substring(2, 4) + wordHex.substring(0, 2);
+      bytes.add(int.parse(invertedHex, radix: 16));
     }
+
     return bytes;
   }
 }
