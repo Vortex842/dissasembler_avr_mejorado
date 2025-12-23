@@ -83,18 +83,21 @@ class HexParserService {
   ///
   /// Salida:  [0x940C, 0x0056] (Intrucciones ya invertidas)
   List<int> _parseDataBytes(String dataStr) {
-    List<int> bytes = [];
+    // Calculamos cuántos elementos habrá (longitud / 4)
+    int count = dataStr.length ~/ 4;
 
-    // Recorremos de 4 en 4 caracteres (2 bytes = 1 palabra de 16 bits)
-    // El bucle ni siquiera intentará entrar si no quedan 4 caracteres completos.
-    for (int i = 0; i + 4 <= dataStr.length; i += 4) {
-      String wordHex = dataStr.substring(i, i + 4);
+    // Creamos y llenamos la lista en un solo paso
+    return List.generate(
+      count,
+      (index) {
+        // 'index' va 0, 1, 2... así que multiplicamos por 4
+        int i = index * 4;
 
-      // Inversión Little Endian
-      String invertedHex = wordHex.substring(2, 4) + wordHex.substring(0, 2);
-      bytes.add(int.parse(invertedHex, radix: 16));
-    }
+        String wordHex = dataStr.substring(i, i + 4);
+        String invertedHex = wordHex.substring(2, 4) + wordHex.substring(0, 2);
 
-    return bytes;
+        return int.parse(invertedHex, radix: 16);
+      },
+    );
   }
 }
