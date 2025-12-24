@@ -1,7 +1,7 @@
 import '../models/disassembled_model.dart';
 import '../models/instruction_model.dart';
-import '../utils/bit_manipulator.dart';
-import '../utils/math_evaluator.dart';
+import '../utils/bit_manipulator_utils.dart';
+import '../utils/math_evaluator_utils.dart';
 
 /// [DisassemblerService]
 ///
