@@ -48,7 +48,7 @@ class DisassemblerService {
   DisassembledModel decode(int currentWord, int? nextWord) {
     // Recorremos el set buscando coincidencia
     for (final instr in _instructionSet) {
-      if (instr.matches(currentWord)) {
+      if (instr.match(currentWord)) {
         // --- CASO 1: Instrucción Larga (32 bits) ---
         if (instr.isLongInstruction) {
           if (nextWord != null) {

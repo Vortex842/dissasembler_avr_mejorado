@@ -96,7 +96,7 @@ class InstructionModel {
   /// Lógica: (Palabra & Máscara) == Patrón
   /// Esto borra las variables de la palabra y deja solo la estructura fija
   /// para compararla.
-  bool matches(int word) => (word & mask) == pattern;
+  bool match(int word) => (word & mask) == pattern;
 
   @override
   String toString() {
