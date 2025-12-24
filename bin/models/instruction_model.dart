@@ -97,4 +97,18 @@ class InstructionModel {
   /// Esto borra las variables de la palabra y deja solo la estructura fija
   /// para compararla.
   bool matches(int word) => (word & mask) == pattern;
+
+  @override
+  String toString() {
+    return '''
+
+  nameTemplate: $nameTemplate
+
+  bitPattern: $bitPattern
+  secondBitPattern: $secondBitPattern
+
+  mask: ${mask.toRadixString(2).padLeft(16, '0')}
+  pattern: ${pattern.toRadixString(2).padLeft(16, '0')}
+''';
+  }
 }
