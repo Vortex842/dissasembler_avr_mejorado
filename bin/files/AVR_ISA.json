@@ -1,0 +1,326 @@
+[
+  {
+    "bitPattern": "0001 11rd dddd rrrr",
+    "nameTemplate": "ADC R{d}, R{r}"
+  },
+  {
+    "bitPattern": "0000 11rd dddd rrrr",
+    "nameTemplate": "ADD R{d}, R{r}"
+  },
+  {
+    "bitPattern": "1001 0110 KKdd KKKK",
+    "nameTemplate": "ADIW R{2*d+1+24}:R{2*d+24}, {K}"
+  },
+  {
+    "bitPattern": "0010 00rd dddd rrrr",
+    "nameTemplate": "AND R{d}, R{r}"
+  },
+  {
+    "bitPattern": "0111 KKKK dddd KKKK",
+    "nameTemplate": "ANDI R{d+16}, 0x{K}"
+  },
+  {
+    "bitPattern": "1111 00kk kkkk k001",
+    "nameTemplate": "BREQ 0x{k}"
+  },
+  {
+    "bitPattern": "1111 01kk kkkk k100",
+    "nameTemplate": "BRGE 0x{k}"
+  },
+  {
+    "bitPattern": "1111 00kk kkkk k000",
+    "nameTemplate": "BRLO 0x{k}"
+  },
+  {
+    "bitPattern": "1111 01kk kkkk k001",
+    "nameTemplate": "BRNE 0x{k}"
+  },
+  {
+    "bitPattern": "1111 01kk kkkk k000",
+    "nameTemplate": "BRSH 0x{k}"
+  },
+  {
+    "bitPattern": "1001 010k kkkk 111k",
+    "secondBitPattern": "kkkk kkkk kkkk kkkk",
+    "nameTemplate": "CALL 0x{k}"
+  },
+  {
+    "bitPattern": "1001 1000 AAAA Abbb",
+    "nameTemplate": "CBI 0x{A}, {b}"
+  },
+  {
+    "bitPattern": "1001 0100 1000 1000",
+    "nameTemplate": "CLC"
+  },
+  {
+    "bitPattern": "1001 0100 1111 1000",
+    "nameTemplate": "CLI"
+  },
+  {
+    "bitPattern": "0001 01rd dddd rrrr",
+    "nameTemplate": "CP R{d}, R{r}"
+  },
+  {
+    "bitPattern": "0011 KKKK dddd KKKK",
+    "nameTemplate": "CPI R{d+16}, {K}"
+  },
+  {
+    "bitPattern": "0001 00rd dddd rrrr",
+    "nameTemplate": "CPSE R{d}, R{r}"
+  },
+  {
+    "bitPattern": "1001 010d dddd 1010",
+    "nameTemplate": "DEC R{d}"
+  },
+  {
+    "bitPattern": "0010 01rd dddd rrrr",
+    "nameTemplate": "EOR R{d}, R{r}"
+  },
+  {
+    "bitPattern": "0000 0011 0ddd 1rrr",
+    "nameTemplate": "FMUL R{d+16}, R{r+16}"
+  },
+  {
+    "bitPattern": "0000 0011 1ddd 0rrr",
+    "nameTemplate": "FMULS R{d+16}, R{r+16}"
+  },
+  {
+    "bitPattern": "0000 0011 1ddd 1rrr",
+    "nameTemplate": "FMULSU R{d+16}, R{r+16}"
+  },
+  {
+    "bitPattern": "1001 0101 0000 1001",
+    "nameTemplate": "ICALL"
+  },
+  {
+    "bitPattern": "1001 0100 0000 1001",
+    "nameTemplate": "IJMP"
+  },
+  {
+    "bitPattern": "1011 0AAd dddd AAAA",
+    "nameTemplate": "IN R{d}, 0x{A}"
+  },
+  {
+    "bitPattern": "1001 010d dddd 0011",
+    "nameTemplate": "INC R{d}"
+  },
+  {
+    "bitPattern": "1001 010k kkkk 110k",
+    "secondBitPattern": "kkkk kkkk kkkk kkkk",
+    "nameTemplate": "JMP 0x{k}"
+  },
+  {
+    "bitPattern": "1001 000d dddd 1100",
+    "nameTemplate": "LD R{d}, X"
+  },
+  {
+    "bitPattern": "1001 000d dddd 1101",
+    "nameTemplate": "LD R{d}, X+"
+  },
+  {
+    "bitPattern": "1000 000d dddd 1000",
+    "nameTemplate": "LD R{d}, Y"
+  },
+  {
+    "bitPattern": "1001 000d dddd 1001",
+    "nameTemplate": "LD R{d}, Y+"
+  },
+  {
+    "bitPattern": "1001 000d dddd 1010",
+    "nameTemplate": "LD R{d}, -Y"
+  },
+  {
+    "bitPattern": "10q0 qq0d dddd 1qqq",
+    "nameTemplate": "LDD R{d}, Y+q"
+  },
+  {
+    "bitPattern": "1000 000d dddd 0000",
+    "nameTemplate": "LD R{d}, Z"
+  },
+  {
+    "bitPattern": "1001 000d dddd 0001",
+    "nameTemplate": "LD R{d}, Z+"
+  },
+  {
+    "bitPattern": "1001 000d dddd 0010",
+    "nameTemplate": "LD R{d}, -Z"
+  },
+  {
+    "bitPattern": "10q0 qq0d dddd 0qqq",
+    "nameTemplate": "LDD R{d}, Z+q"
+  },
+  {
+    "bitPattern": "1110 KKKK dddd KKKK",
+    "nameTemplate": "LDI R{d+16}, 0x{K}"
+  },
+  {
+    "bitPattern": "1001 000d dddd 0000",
+    "secondBitPattern":"kkkk kkkk kkkk kkkk",
+    "nameTemplate": "LDS R{d}, 0x{k}"
+  },
+  {
+    "bitPattern": "1010 0kkk dddd kkkk",
+    "nameTemplate": "LDS R{d+16}, 0x{k}"
+  },
+  {
+    "bitPattern":"0000 11dd dddd dddd",
+    "nameTemplate":"LSL R{d}"
+  },
+  {
+    "bitPattern":"1001 010d dddd 0110",
+    "nameTemplate":"LSR R{d}"
+  },
+  {
+    "bitPattern":"0010 11rd dddd rrrr",
+    "nameTemplate":"MOV R{d}, R{r}"
+  },
+  {
+    "bitPattern":"0000 0001 dddd rrrr",
+    "nameTemplate":"MOVW R{2*d+1}:R{2*d}, R{2*r+1}:R{2*r}"
+  },
+  {
+    "bitPattern": "1001 11rd dddd rrrr",
+    "nameTemplate": "MUL R{d}, R{r}"
+  },
+  {
+    "bitPattern": "0000 0010 dddd rrrr",
+    "nameTemplate": "MULS R{d+16}, R{r+16}"
+  },
+  {
+    "bitPattern": "0000 0011 0ddd 0rrr",
+    "nameTemplate": "MULSU R{d+16}, R{r+16}"
+  },
+  {
+    "bitPattern": "1001 010d dddd 0001",
+    "nameTemplate": "NEG R{d}"
+  },
+  {
+    "bitPattern": "0000 0000 0000 0000",
+    "nameTemplate": "NOP"
+  },
+  {
+    "bitPattern": "0010 10rd dddd rrrr",
+    "nameTemplate": "OR R{d}, R{r}"
+  },
+  {
+    "bitPattern": "0011 KKKK dddd KKKK",
+    "nameTemplate": "ORI R{d+16}, 0x{K}"
+  },
+  {
+    "bitPattern": "1011 1AAr rrrr AAAA",
+    "nameTemplate": "OUT 0x{A}, R{r}"
+  },
+  {
+    "bitPattern": "1001 000d dddd 1111",
+    "nameTemplate": "POP R{d}"
+  },
+  {
+    "bitPattern": "1001 001d dddd 1111",
+    "nameTemplate": "PUSH R{d}"
+  },
+  {
+    "bitPattern": "1001 0101 0000 1000",
+    "nameTemplate": "RET"
+  },
+  {
+    "bitPattern": "1001 0101 0001 1000",
+    "nameTemplate": "RETI"
+  },
+  {
+    "bitPattern": "0001 11dd dddd dddd",
+    "nameTemplate": "ROL R{d}"
+  },
+  {
+    "bitPattern": "1001 010d dddd 0111",
+    "nameTemplate": "ROR R{d}"
+  },
+  {
+    "bitPattern": "0000 10rd dddd rrrr",
+    "nameTemplate": "SBC R{d}, R{r}"
+  },
+  {
+    "bitPattern": "1001 1010 AAAA Abbb",
+    "nameTemplate": "SBI 0x{A}, 0x{b}"
+  },
+  {
+    "bitPattern": "1001 1001 AAAA Abbb",
+    "nameTemplate": "SBIC 0x{A}, 0x{b}"
+  },
+  {
+    "bitPattern": "1001 1011 AAAA Abbb",
+    "nameTemplate": "SBIS 0x{A}, 0x{b}"
+  },
+  {
+    "bitPattern": "1001 0111 KKdd KKKK",
+    "nameTemplate": "SBIW R{2*d+1+24}:R{2*d+24}, 0x{K}"
+  },
+  {
+    "bitPattern": "0110 KKKK dddd KKKK",
+    "nameTemplate": "SBR R{d+16}, 0x{K}"
+  },
+  {
+    "bitPattern": "1111 110r rrrr 0bbb",
+    "nameTemplate": "SBRC R{r}, {b}"
+  },
+  {
+    "bitPattern": "1111 111r rrrr 0bbb",
+    "nameTemplate": "SBRS R{r}, {b}"
+  },
+  {
+    "bitPattern": "1001 0101 1000 1000",
+    "nameTemplate": "SLEEP"
+  },
+  {
+    "bitPattern": "1001 001r rrrr 1100",
+    "nameTemplate": "ST X, R{r}"
+  },
+  {
+    "bitPattern": "1001 001r rrrr 1101",
+    "nameTemplate": "ST X+, R{r}"
+  },
+  {
+    "bitPattern": "1001 001r rrrr 1110",
+    "nameTemplate": "ST -X, R{r}"
+  },
+  {
+    "bitPattern": "1000 001r rrrr 1000",
+    "nameTemplate": "ST Y, R{r}"
+  },
+  {
+    "bitPattern": "1001 001r rrrr 1001",
+    "nameTemplate": "ST Y+, R{r}"
+  },
+  {
+    "bitPattern": "1001 001r rrrr 1010",
+    "nameTemplate": "ST -Y, R{r}"
+  },
+  {
+    "bitPattern": "10q0 qq1r rrrr 1qqq",
+    "nameTemplate": "STD Y+q, R{r}"
+  },
+
+  {
+    "bitPattern": "1000 001r rrrr 0000",
+    "nameTemplate": "ST Z, R{r}"
+  },
+  {
+    "bitPattern": "1001 001r rrrr 0001",
+    "nameTemplate": "ST Z+, R{r}"
+  },
+  {
+    "bitPattern": "1001 001r rrrr 0010",
+    "nameTemplate": "ST -Z, R{r}"
+  },
+  {
+    "bitPattern": "10q0 qq0r rrrr 0qqq",
+    "nameTemplate": "STD Z+q, R{r}"
+  },
+  {
+    "bitPattern": "0001 10rd dddd rrrr",
+    "nameTemplate": "SUB R{d}, R{r}"
+  },
+  {
+    "bitPattern": "0101 KKKK dddd KKKK",
+    "nameTemplate": "SUBI R{d}, 0x{K}"
+  }
+]
