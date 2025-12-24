@@ -20,19 +20,17 @@ class HexParserService {
   ///
   /// Lanza una [FormatException] si encuentra líneas corruptas.
   List<HexLineModel> parse(String fileContent) {
-    List<HexLineModel> lines = [];
+    return fileContent
+        // 1. Dividir líneas de texto crudas, por saltos de linea
+        .split(RegExp(r'\r\n|\r|\n'))
 
-    // Dividimos por saltos de línea (soporta Windows \r\n y Linux \n)
-    final rawLines = fileContent.split(RegExp(r'\r\n|\r|\n'));
+        // 2. Limpieza preliminar: Trim y filtrar vacías
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
 
-    for (var line in rawLines) {
-      // Limpiar espacios en blanco
-      line = line.trim();
-
-      // Ignorar líneas vacías
-      if (line.isEmpty) continue;
-
-      // Validar inicio de línea estándar Intel HEX
+        // 3. Transformación a HexLineModel
+        .map((line) {
+      // Validar inicio
       if (!line.startsWith(':')) {
         throw FormatException('Línea inválida (no comienza con ":"): $line');
       }
@@ -41,32 +39,33 @@ class HexParserService {
         // --- ESTRUCTURA DE LA LÍNEA ---
         // :LLAAAATT[DATA]CC
 
-        // 1. Longitud (LL): Caracteres en posiciones (o Bytes) 1-3
+        // - LL: Longitud (Bytes de datos).
         final int length = int.parse(line.substring(1, 3), radix: 16);
 
-        // 2. Dirección (AAAA): Caracteres en posiciones 3-7
+        // - AAAA: Dirección de memoria (Offset).
         final int address = int.parse(line.substring(3, 7), radix: 16);
 
-        // 3. Tipo (TT): Caracteres en posiciones 7-9
+        // - TT: Tipo de Registro.
         final int type = int.parse(line.substring(7, 9), radix: 16);
 
-        // 4. Datos: Desde el caracter en la posición 9 hasta el final (sin el Checksum)
-        // La longitud del string de datos es length * 2 (porque son 2 caracteres por Byte)
+        // - DD: Datos reales (1 byte por hex).
         final String dataStr = line.substring(9, 9 + (length * 2));
 
-        // 5. Convertir Hex String a Lista de Bytes
+        // Convertir datos hex a lista de enteros (bytes) con corrección Little Endian
         final List<int> bytes = _parseDataBytes(dataStr);
 
-        // Crear el modelo y agregar a la lista final de líneas HEX parseadas correctamente
-        lines.add(
-            HexLineModel(address: address, recordType: type, dataBytes: bytes));
+        return HexLineModel(
+          address: address,
+          recordType: type,
+          dataBytes: bytes,
+        );
       } catch (e) {
         throw FormatException(
             'Error parseando línea HEX: "$line". Detalle: $e');
       }
-    }
-
-    return lines;
+    })
+        // 4. Empaquetado final
+        .toList();
   }
 
   /// Convierte la cadena hexadecimal de datos en una lista de enteros.
