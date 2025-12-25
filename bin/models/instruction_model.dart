@@ -101,7 +101,7 @@ class InstructionModel {
   @override
   String toString() {
     return '''
-
+InstructionModel
   nameTemplate: $nameTemplate
 
   bitPattern: $bitPattern
