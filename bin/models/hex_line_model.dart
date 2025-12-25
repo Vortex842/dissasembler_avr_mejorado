@@ -58,7 +58,7 @@ class HexLineModel {
   @override
   String toString() {
     final dataHex = dataBytes
-        .map((e) => '0x${e.toRadixString(16).toUpperCase().padLeft(2, '0')}')
+        .map((e) => '0x${e.toRadixString(16).toUpperCase().padLeft(4, '0')}')
         .join(', ');
 
     final addr = '0x${address.toRadixString(16).toUpperCase().padLeft(4, '0')}';

@@ -79,7 +79,7 @@ void main() {
 
           expect(text, contains('Type: 0x00'), reason: 'Debe mostrar el tipo');
 
-          expect(text, contains('Data: [0x01, 0x02]'),
+          expect(text, contains('Data: [0xE0FF, 0x940E, 0x0FFF]'),
               reason: 'Debe mostrar los datos');
         },
       );
