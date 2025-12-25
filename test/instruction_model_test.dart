@@ -82,13 +82,17 @@ void main() {
                   'La instrucción "ADC R17, R1" debe hacer match con el patrón definido.');
 
           // Verificar que no haga match con una instruccion incorrecta
+          expect(maskedOtherInstr, isNot(equals(shortInstr.pattern)),
+              reason:
+                  'La instrucción "ADD R2, R1" NO debe hacer match con el patrón de ADC.');
 
           // Ahora usando el metodo "match" de la clase InstructionModel
           expect(shortInstr.match(testInstr), isTrue,
               reason:
                   'El método match debe retornar true para la instrucción "ADC R17, R1".');
 
-          expect(maskedOtherInstr, isNot(equals(shortInstr.pattern)),
+          expect(
+              shortInstr.match(otherInstr), isNot(equals(shortInstr.pattern)),
               reason:
                   'La instrucción "ADD R2, R1" NO debe hacer match con el patrón de ADC.');
         },
