@@ -84,7 +84,9 @@ class HexParserService {
   List<int> _parseDataBytes(String dataStr) {
     // Calculamos cuántos elementos habrá (longitud / 2)
     // por que la longitud indica cada byte o 2 caracteres hex
-    int count = dataStr.length ~/ 2;
+    // pero al usar el dataStr.length, obtenemos el total de caracteres
+    // y por ello el divido por 4
+    int count = dataStr.length ~/ 4;
 
     // Creamos y llenamos la lista en un solo paso
     return List.generate(
