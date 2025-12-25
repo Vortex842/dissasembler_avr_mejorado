@@ -61,8 +61,29 @@ class HexLineModel {
         .map((e) => '0x${e.toRadixString(16).toUpperCase().padLeft(2, '0')}')
         .join(', ');
 
-    return 'HexLine(Addr: 0x${address.toRadixString(16).toUpperCase().padLeft(4, '0')}, '
-        'Type: ${recordType.toRadixString(16).padLeft(2, '0')}, '
-        'Data: [$dataHex])';
+    final addr = '0x${address.toRadixString(16).toUpperCase().padLeft(4, '0')}';
+
+    final type = recordType.toRadixString(16).padLeft(2, '0');
+
+    return '''
+HexLineModel
+  Addr: $addr
+  Type: $type
+  Data: [$dataHex]
+''';
   }
+
+//   @override
+//   String toString() {
+//     return '''
+
+//   nameTemplate: $nameTemplate
+
+//   bitPattern: $bitPattern
+//   secondBitPattern: $secondBitPattern
+
+//   mask: ${mask.toRadixString(2).padLeft(16, '0')}
+//   pattern: ${pattern.toRadixString(2).padLeft(16, '0')}
+// ''';
+//   }
 }
