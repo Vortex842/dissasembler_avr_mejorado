@@ -51,17 +51,17 @@ class DisassemblerService {
       if (instr.match(currentWord)) {
         // --- CASO 1: Instrucción Larga (32 bits) ---
         if (instr.isLongInstruction) {
-          if (nextWord != null) {
+          if (nextWord != null && instr.secondBitPattern != null) {
             // Combinamos las palabras
-            final int fullValue = (currentWord << 16) | nextWord;
+            final int fullWord = (currentWord << 16) | nextWord;
             final String fullPattern =
                 instr.bitPattern + instr.secondBitPattern!;
 
             // Construimos el texto y retornamos INMEDIATAMENTE
-            final text = _buildText(instr.nameTemplate, fullPattern, fullValue);
+            final text = _buildText(instr.nameTemplate, fullPattern, fullWord);
 
             return DisassembledModel(
-                text: text, countWords: 2, rawWord: fullValue);
+                text: text, countWords: 2, rawWord: fullWord);
           } else {
             // Error: Falta la segunda palabra
             return DisassembledModel(

@@ -29,8 +29,8 @@ class DisassembledModel {
 
   /// El valor numérico crudo de la instrucción completa.
   ///
-  /// Si [length] es 2, este valor contiene los 32 bits combinados.
-  /// Si [length] es 1, contiene los 16 bits originales.
+  /// Si [countWords] es 2, este valor contiene los 32 bits combinados.
+  /// Si [countWords] es 1, contiene los 16 bits originales.
   /// Se usa principalmente para visualización y debugging (para ver el código hex).
   final int rawWord;
 
