@@ -53,7 +53,7 @@ void main() {
       );
 
       test(
-        'Verificar que se hizo match con una instrucción real: ADC R17, R1',
+        'Debe hacerse match solo con una instrucción, ej: ADC R17, R1',
         () {
           // Ejemplo de instruccion correcta: ADC R17, R1
           // mask: 1111 1100 0000 0000
@@ -99,7 +99,7 @@ void main() {
       );
 
       test(
-        'Comprobar que una instrucción es larga',
+        'Debe identificar si una instrucción es larga (32 bits) o corta (16 bits)',
         () {
           expect(longInstr.isLongInstruction, isTrue,
               reason:
