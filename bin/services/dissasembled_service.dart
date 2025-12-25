@@ -60,12 +60,13 @@ class DisassemblerService {
             // Construimos el texto y retornamos INMEDIATAMENTE
             final text = _buildText(instr.nameTemplate, fullPattern, fullValue);
 
-            return DisassembledModel(text: text, length: 2, rawWord: fullValue);
+            return DisassembledModel(
+                text: text, countWords: 2, rawWord: fullValue);
           } else {
             // Error: Falta la segunda palabra
             return DisassembledModel(
                 text: '// ERROR: Instrucción incompleta (Falta 2da palabra)',
-                length:
+                countWords:
                     1, // Consumimos 1 para no trabar el bucle, aunque esté roto
                 rawWord: currentWord);
           }
@@ -76,7 +77,8 @@ class DisassemblerService {
           final text =
               _buildText(instr.nameTemplate, instr.bitPattern, currentWord);
 
-          return DisassembledModel(text: text, length: 1, rawWord: currentWord);
+          return DisassembledModel(
+              text: text, countWords: 1, rawWord: currentWord);
         }
       }
     }
@@ -86,7 +88,7 @@ class DisassemblerService {
     return DisassembledModel(
         text:
             '// 0x${currentWord.toRadixString(16).toUpperCase().padLeft(4, '0')} (Desconocida)',
-        length: 1,
+        countWords: 1,
         rawWord: currentWord);
   }
 

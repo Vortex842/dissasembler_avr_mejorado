@@ -11,7 +11,7 @@
 ///
 /// CONTENIDO:
 /// 1. [text]: La traducción legible para humanos (ej: "LDI R16, 0xFF").
-/// 2. [length]: La cantidad de memoria que consumió esta instrucción.
+/// 2. [countWords]: La cantidad de memoria que consumió esta instrucción.
 /// 3. [rawWord]: El código máquina original (útil para mostrar al lado del texto).
 class DisassembledModel {
   /// El texto en lenguaje ensamblador resultante.
@@ -25,7 +25,7 @@ class DisassembledModel {
   /// Este valor indica al Program Counter (PC) cuánto debe incrementarse.
   /// - Valor 1: Instrucción estándar (16 bits).
   /// - Valor 2: Instrucción larga (32 bits, tomó la palabra actual y la siguiente).
-  final int length;
+  final int countWords;
 
   /// El valor numérico crudo de la instrucción completa.
   ///
@@ -36,7 +36,7 @@ class DisassembledModel {
 
   const DisassembledModel({
     required this.text,
-    required this.length,
+    required this.countWords,
     required this.rawWord,
   });
 
