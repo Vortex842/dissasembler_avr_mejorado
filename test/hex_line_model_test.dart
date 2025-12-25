@@ -71,7 +71,7 @@ void main() {
           // Aqui hay datos de programa
           //   Addr: 0x0000
           //   Type: 0x00
-          //   Data: [0x01, 0x02]
+          //   Data: [0xE0FF, 0x940E, 0x0FFF]
           final text = lineWithData.toString();
 
           expect(text, contains('Addr: 0x0'),

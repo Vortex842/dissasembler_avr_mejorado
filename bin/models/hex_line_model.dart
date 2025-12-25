@@ -49,9 +49,9 @@ class HexLineModel {
   /// Genera una representación legible de la línea HEX.
   /// - [address] es la dirección de memoria inicial donde se deben escribir los [dataBytes].
   /// - [recordType] es el tipo de registro en formato hexadecimal.
-  /// - [dataBytes] es la lista de bytes en formato hexadecimal.
+  /// - [dataBytes] es la lista de numeros, en 2 bytes cada uno, en formato hexadecimal.
   ///
-  /// Ejemplo: "HexLine(Addr: 0x0000, Type: 00, Data: [0x0C, 0x94...])"
+  /// Ejemplo: "HexLine(Addr: 0x0000, Type: 00, Data: [0xE0FF, 0x940E, 0x0FFF])"
   ///
   /// NOTA: Esta representación no es usada para la lógica del programa.
   /// Se utiliza solo para depuración.
