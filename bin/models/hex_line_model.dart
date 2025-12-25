@@ -63,10 +63,12 @@ class HexLineModel {
 
     final addr = '0x${address.toRadixString(16).toUpperCase().padLeft(4, '0')}';
 
-    final type = recordType.toRadixString(16).padLeft(2, '0');
+    final type =
+        '0x${recordType.toRadixString(16).toUpperCase().padLeft(2, '0')}';
 
     return '''
 HexLineModel
+${isDataRecord ? 'Aqui hay datos de programa' : isEndOfFile ? 'Es un EOF' : 'Es un segmento extendido (sin datos)'}
   Addr: $addr
   Type: $type
   Data: [$dataHex]
