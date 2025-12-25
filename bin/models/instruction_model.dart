@@ -100,6 +100,11 @@ class InstructionModel {
 
   @override
   String toString() {
+    final maskStr = '0x${mask.toRadixString(16).toUpperCase().padLeft(4, '0')}';
+
+    final patternStr =
+        '0x${pattern.toRadixString(16).toUpperCase().padLeft(4, '0')}';
+
     return '''
 InstructionModel
   nameTemplate: $nameTemplate
@@ -107,8 +112,8 @@ InstructionModel
   bitPattern: $bitPattern
   secondBitPattern: $secondBitPattern
 
-  mask: ${mask.toRadixString(2).padLeft(16, '0')}
-  pattern: ${pattern.toRadixString(2).padLeft(16, '0')}
+  mask: $maskStr
+  pattern: $patternStr
 ''';
   }
 }

@@ -105,9 +105,48 @@ void main() {
               reason:
                   'La instrucción CALL debe ser reconocida como una instrucción larga (32 bits).');
 
+          expect(shortInstr.secondBitPattern, isNull,
+              reason:
+                  'La instrucción ADC no debe tener un segundo patrón de bits.');
+
           expect(shortInstr.isLongInstruction, isFalse,
               reason:
                   'La instrucción ADC debe ser reconocida como una instrucción corta (16 bits).');
+
+          expect(longInstr.secondBitPattern, equals('kkkk kkkk kkkk kkkk'),
+              reason:
+                  'La instrucción CALL debe tener un segundo patrón de bits.');
+        },
+      );
+
+      test(
+        'El metodo "toString" debe generar una descripción legible para depuración',
+        () {
+          // InstructionModel
+          //  nameTemplate: ADC R{d}, R{r}
+
+          //  bitPattern: 0001 11rd dddd rrrr
+          //  secondBitPattern: null
+          //  mask: 0xFC00
+          //  pattern: 0x1C00
+          final text = shortInstr.toString();
+
+          expect(text, contains('nameTemplate: ADC R{d}, R{r}'),
+              reason: 'Debe mostrar la plantilla correcta del nombre');
+
+          expect(text, contains('bitPattern: 0001 11rd dddd rrrr'),
+              reason: 'Debe mostrar el patrón de bits correcto');
+
+          expect(text, contains('secondBitPattern: null'),
+              reason:
+                  'Debe mostrar el patrón correcto de bits secundario correcto');
+
+          expect(text, contains('mask: 0xFC00'),
+              reason:
+                  'Debe mostrar la máscara correcta en formato hexadecimal');
+
+          expect(text, contains('pattern: 0x1C00'),
+              reason: 'Debe mostrar el patrón correcto en formato hexadecimal');
         },
       );
     },
