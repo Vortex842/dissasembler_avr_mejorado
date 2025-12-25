@@ -48,7 +48,7 @@ class HexParserService {
         // - TT: Tipo de Registro.
         final int type = int.parse(line.substring(7, 9), radix: 16);
 
-        // - DD: Datos reales (1 byte por hex).
+        // - [D1[0..3], D2[0..3], ...]: Datos reales (1 byte por hex).
         final String dataStr = line.substring(9, 9 + (length * 2));
 
         // Convertir datos hex a lista de enteros (bytes) con corrección Little Endian
@@ -82,14 +82,15 @@ class HexParserService {
   ///
   /// Salida:  [0x940C, 0x0056] (Intrucciones ya invertidas)
   List<int> _parseDataBytes(String dataStr) {
-    // Calculamos cuántos elementos habrá (longitud / 4)
-    int count = dataStr.length ~/ 4;
+    // Calculamos cuántos elementos habrá (longitud / 2)
+    // por que la longitud indica cada byte o 2 caracteres hex
+    int count = dataStr.length ~/ 2;
 
     // Creamos y llenamos la lista en un solo paso
     return List.generate(
       count,
       (index) {
-        // 'index' va 0, 1, 2... así que multiplicamos por 4
+        // Multiplicamos por 4 para contemplar pares de bytes (4 caracteres hex)
         int i = index * 4;
 
         String wordHex = dataStr.substring(i, i + 4);

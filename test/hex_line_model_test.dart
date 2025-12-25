@@ -9,7 +9,7 @@ void main() {
       final lineWithData = HexLineModel(
         address: 0x0000,
         recordType: 0x00,
-        dataBytes: [0x01, 0x02],
+        dataBytes: [0xE0FF, 0x940E, 0x0FFF],
       );
 
       final lineEOF = HexLineModel(
@@ -50,7 +50,7 @@ void main() {
       test(
         'Cada linea debe tener los datos correctos',
         () {
-          expect(lineWithData.dataBytes, equals([0x01, 0x02]),
+          expect(lineWithData.dataBytes, equals([0xE0FF, 0x940E, 0x0FFF]),
               reason:
                   'Los bytes de datos deben coincidir con los proporcionados.');
 
