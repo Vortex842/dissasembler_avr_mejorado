@@ -36,6 +36,25 @@ void main() {
           expect(result['d'], equals(4)); // dddd = 0100
         },
       );
+
+      test(
+        'Debe ignorar los bits fijos (0 y 1) y solo devolver variables',
+        () {
+          // Patrón con muchos 0s y 1s
+          final pattern = "0000 1111 aaaa 0000";
+          final word = 0xFFFF; // 1111 1111 1111 1111
+
+          final result = BitManipulator.extractValues(pattern, word);
+
+          // Solo debe existir la clave 'a'
+          expect(result.length, equals(1));
+          expect(result.containsKey('0'), isFalse);
+          expect(result.containsKey('1'), isFalse);
+
+          // 'a' coincide con 1111 (0xF)
+          expect(result['a'], equals(0xF));
+        },
+      );
     },
   );
 }
