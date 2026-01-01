@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import '../bin/models/hex_line_model.dart';
+import '../../bin/models/hex_line_model.dart';
 
 void main() {
   group(

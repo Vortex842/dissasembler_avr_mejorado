@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import '../bin/models/disassembled_model.dart';
+import '../../bin/models/disassembled_model.dart';
 
 void main() {
   group(

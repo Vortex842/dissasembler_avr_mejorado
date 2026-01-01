@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import '../bin/utils/bit_manipulator_utils.dart';
+import '../../bin/utils/bit_manipulator_utils.dart';
 
 void main() {
   group(
