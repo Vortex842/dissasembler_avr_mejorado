@@ -4,7 +4,7 @@ import '../bin/models/hex_line_model.dart';
 
 void main() {
   group(
-    'HexLineModel test',
+    'Pruebas para la clase HexLineModel',
     () {
       final lineWithData = HexLineModel(
         address: 0x0000,

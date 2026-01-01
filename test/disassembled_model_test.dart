@@ -4,7 +4,7 @@ import '../bin/models/disassembled_model.dart';
 
 void main() {
   group(
-    'DisassembledModel Tests',
+    'Pruebas para la clase DisassembledModel',
     () {
       final shortDecodedInstr = DisassembledModel(
         text: "LDI R16, 0xFF",

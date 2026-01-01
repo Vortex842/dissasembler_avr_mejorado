@@ -4,7 +4,7 @@ import '../bin/models/instruction_model.dart';
 
 void main() {
   group(
-    'InstructionModel test',
+    'Pruebas para la clase InstructionModel',
     () {
       final jsonAVRInstructions = [
         {
