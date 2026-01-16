@@ -1,0 +1,15 @@
+[
+  {
+    "bitPattern": "0001 11rd dddd rrrr",
+    "nameTemplate": "ADC R{d}, R{r}"
+  },
+  {
+    "bitPattern": "0000 11rd dddd rrrr",
+    "nameTemplate": "ADD R{d}, R{r}"
+  },
+  {
+    "bitPattern": "1001 010k kkkk 111k",
+    "secondBitPattern": "kkkk kkkk kkkk kkkk",
+    "nameTemplate": "CALL 0x{k}"
+  }
+]
