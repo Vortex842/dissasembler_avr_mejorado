@@ -39,8 +39,9 @@ class InstructionLoader {
     } catch (e) {
       // Si falla parseInstructions, el error sube automáticamente.
       // Si falla readAsStringSync (ej: permisos), entra aquí.
-      if (e is InstructionLoadException)
+      if (e is InstructionLoadException) {
         rethrow; // Ya es nuestro error, déjalo pasar.
+      }
       throw InstructionLoadException('Error de lectura I/O: $e');
     }
   }

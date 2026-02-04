@@ -74,7 +74,8 @@ class MathEvaluator {
         // \b asegura que si tenemos la variable "d", no reemplace la "d" dentro de "add"
         // sino solo las ocurrencias completas de " d ".
         result = result.replaceAll(
-          RegExp(r'\b' + key + r'\b'),
+          // Ignorar mayúsculas/minúsculas con caseSensitive: false
+          RegExp(r'\b' + key + r'\b', caseSensitive: false),
           value.toString(),
         );
       },
