@@ -6,14 +6,6 @@ void main() {
   group(
     'Evaluar expresiones matemáticas',
     () {
-      final expressions = [
-        'd',
-        'r',
-        'd+16',
-        'K',
-        'k',
-      ];
-
       final variblesList = [
         {'d': 0, 'r': 1},
         {'d': 2, 'K': 10},
