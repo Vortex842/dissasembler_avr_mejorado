@@ -45,7 +45,7 @@ class DisassemblerService {
   /// final result = disassemblerService.decode(0xE0FF, 0x1234);
   /// print(result.text); // Imprime: "MOV R15, 255"
   /// ```
-  DisassembledModel decode(int currentWord, int? nextWord) {
+  DisassembledModel decode(int currentWord, {int? nextWord}) {
     // Recorremos el set buscando coincidencia
     for (final instr in _instructionSet) {
       if (instr.match(currentWord)) {
@@ -65,10 +65,11 @@ class DisassemblerService {
           } else {
             // Error: Falta la segunda palabra
             return DisassembledModel(
-                text: '// ERROR: Instrucción incompleta (Falta 2da palabra)',
-                countWords:
-                    1, // Consumimos 1 para no trabar el bucle, aunque esté roto
-                rawWord: currentWord);
+              text: '// ERROR: Instrucción incompleta (Falta 2da palabra)',
+              countWords:
+                  1, // Consumimos 1 para no trabar el bucle, aunque esté roto
+              rawWord: currentWord,
+            );
           }
         }
 
@@ -148,7 +149,7 @@ class DisassemblerService {
     // 2. Reemplazar y evaluar expresiones en la plantilla (ej: "{d+16}" -> "16")
     // Buscamos patrones como: {expresion} o 0x{expresion}
     return template.replaceAllMapped(
-      RegExp(r'(0x|0b)?{([^}]+)}'),
+      RegExp(r'(0x|0b)?\{([^}]+)\}'),
       (match) {
         final prefix = match[1]; // '0x', '0b' o null
         final expr = match[2]!; // La fórmula interna, ej: "d+16" or "K"
@@ -158,9 +159,9 @@ class DisassemblerService {
 
         // Formateamos según el prefijo
         if (prefix == '0x') {
-          return '0x${result.toRadixString(16).toUpperCase()}'; // Ej: 0xFF
+          return '0x${result.toRadixString(16).toUpperCase().padLeft(4, '0')}'; // Ej: 0x00FF
         } else if (prefix == '0b') {
-          return '0b${result.toRadixString(2)}'; // Ej: 0b11111111
+          return '0b${result.toRadixString(2).padLeft(8, '0')}'; // Ej: 0b00011111
         } else {
           return result.toString(); // Ej: 255
         }
